@@ -52,36 +52,35 @@
 
             <article class="p-4 mb-3 bg-light rounded">
               <h4 class="fst-italic text-center">Acerca de</h4>
-              <p class="mb-0 text-justify">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae totam sit
-                unde
-                laboriosam
-                facere, numquam fuga similique hic, officia ratione fugiat, exercitationem deleniti velit inventore
-                tenetur earum distinctio quasi eveniet.</p>
+              <p class="mb-0 text-justify">{{ acerca }}</p>
             </article>
 
             <article class="p-4 text-center">
               <h4 class="fst-italic">Categorías</h4>
               <ol class="list-unstyled mb-0">
-                <li><a class=text-decoration-none href={% url 'categoria' %}>Categoría #</a></li>
-                <li><a class=text-decoration-none href={% url 'categoria' %}>Categoría #</a></li>
+                {% for categoria in categorias %}
+                  <li><a class=text-decoration-none href= {% url 'categoria' categoria_slug=categoria.slug%} >{{ categoria }}</a></li>
+                {% endfor %}
               </ol>
             </article>
 
             <article class="p-4 text-center">
               <h4 class="fst-italic">Archivos</h4>
               <ol class="list-unstyled mb-0">
-                <li><a class=text-decoration-none href={% url 'archivo' %}>Julio 2023</a></li>
-                <li><a class=text-decoration-none href={% url 'archivo' %}>Junio 2023</a></li>
-                <li><a class=text-decoration-none href={% url 'archivo' %}>Mayo 2023</a></li>
+                {% for archivo in archivos %}
+                  <li><a class=text-decoration-none href= {% url 'archivo' year=archivo.fecha.year month=archivo.fecha.month %} >{{archivo.mes_letra}} de {{archivo.fecha.year}}</a></li>
+                {% endfor %}
               </ol>
             </article>
 
             <article class="p-4 text-center">
               <h4 class="fst-italic">Nuestras redes</h4>
               <ol class="list-unstyled">
-                <li><a class=text-decoration-none href="#" target="_blank"><i class="bi bi-github"></i> GitHub</a></li>
-                <li><a class=text-decoration-none href="#" target="_blank"><i class="bi bi-linkedin"></i> Linkedin</a>
-                </li>
+                {% for red in redes %}
+                 {% if red.url %}
+                    <li><a class=text-decoration-none href={{ red.url }} target="_blank"><i class="{{red.icono}}"></i>  {{red}}</a></li>
+                  {% endif %}
+                {% endfor %}
               </ol>
             </article>
 
