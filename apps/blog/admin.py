@@ -1,23 +1,20 @@
 from django.contrib import admin
 from . import models
 
-
 admin.site.site_header = 'Administración del Blog'
 admin.site.index_title = 'Panel de Control'
 admin.site.site_title = 'Blog'
 
 # Register your models here.
 
-#### Acerca ####
-
+#ACERCA
 class AcercaAdmin(admin.ModelAdmin):
     readonly_fields = ('creacion', 'actualizacion')
-    list_display = ('descripcion','creacion')
+    list_display = ('descripcion', 'creacion')
 
 admin.site.register(models.Acerca, AcercaAdmin)
 
-
-#### Redes Sociales ####
+#REDES SOCIALES
 
 class RedAdmin(admin.ModelAdmin):
     readonly_fields = ('creacion', 'actualizacion')
@@ -25,9 +22,7 @@ class RedAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Red, RedAdmin)
 
-
-#### Categoría ####
-
+#CATEGORIA
 class CategoriaAdmin(admin.ModelAdmin):
     readonly_fields = ('creacion', 'actualizacion')
     list_display = ('nombre', 'activo', 'creacion')
@@ -36,8 +31,7 @@ class CategoriaAdmin(admin.ModelAdmin):
 admin.site.register(models.Categoria, CategoriaAdmin)
 
 
-#### Etiqueta ####
-
+#ETIQUETA
 class EtiquetaAdmin(admin.ModelAdmin):
     readonly_fields = ('creacion', 'actualizacion')
     list_display = ('nombre', 'activo', 'creacion')
@@ -45,11 +39,10 @@ class EtiquetaAdmin(admin.ModelAdmin):
 admin.site.register(models.Etiqueta, EtiquetaAdmin)
 
 
-#### Articulo ####
-
+#ARTICULO
 class ArticuloAdmin(admin.ModelAdmin):
     readonly_fields = ('creacion', 'actualizacion')
-    list_display = ('titulo', 'categoria', 'publicado', 'autor' ,'creacion', 'articuloEtiquetas')
+    list_display = ('titulo', 'categoria', 'publicado', 'autor', 'creacion', 'articuloEtiquetas')
     prepopulated_fields = {'slug': ('titulo', )}
     ordering = ('autor', '-creacion')
     search_fields = ('titulo', 'contenido', 'autor__username', 'categoria__nombre')
@@ -57,7 +50,7 @@ class ArticuloAdmin(admin.ModelAdmin):
 
     def articuloEtiquetas(self, obj):
         return ' - '.join([etiqueta.nombre for etiqueta in obj.etiquetas.all().order_by('nombre')])
-
+    
     articuloEtiquetas.short_description = 'Etiquetas'
 
 admin.site.register(models.Articulo, ArticuloAdmin)

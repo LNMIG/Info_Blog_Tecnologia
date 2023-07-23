@@ -1,39 +1,38 @@
-from . import models
-
+from . import models 
 
 def contexto_base(request):
+    contexto = dict ()
 
-    contexto = dict()
-
-    # Acerca de
+     #Acerca de 
     if models.Acerca.objects.count():
-        contexto['acerca'] = models.Acerca.objects.latest('creacion')
+          contexto['acerca'] = models.Acerca.objects.latest('creacion')
     else:
         contexto['acerca'] = ''
 
-    # Categorias
+    # Categorías
     contexto['categorias'] = models.Categoria.objects.filter(activo=True)
 
-    # Archivos
+    #Archivos
     meses = {
-        1: 'enero',
-        2: 'febrero',
-        3: 'marzo',
-        4: 'abril',
-        5: 'mayo',
-        6: 'junio',
-        7: 'julio',
-        8: 'agosto',
-        9: 'septiembre',
-        10: 'octubre',
-        11: 'noviembre',
-        12: 'diciembre'
+         1: 'enero',
+         2: 'febrero',
+         3: 'marzo',
+         4: 'abril',
+         5: 'mayo',
+         6: 'junio',
+         7: 'julio',
+         8: 'agosto',
+         9: 'septiembre',
+         10: 'octubre',
+         11: 'noviembre',
+         12: 'diciembre'
     }
 
     contexto['archivos'] = [{'mes_letra': meses[fecha.month], 'fecha':fecha}
-                            for fecha in models.Articulo.objects.dates('creacion', 'month', order='DESC').filter(publicado=True)]
-
-    # Redes
+                            for fecha in models.Articulo.objects.dates('creacion', 'month', 
+                            order='DESC').filter(publicado=True)]
+    
+    #Redes
     contexto['redes'] = models.Red.objects.all()
 
     return contexto
