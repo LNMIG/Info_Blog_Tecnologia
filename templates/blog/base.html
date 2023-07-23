@@ -30,7 +30,7 @@
     <header class="d-flex flex-wrap justify-content-between py-3 mb-4 border-bottom">
 
       <section class="dropdown">
-        <a href={% url 'inicio' %} class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <a href={% url 'apps.blog:inicio' %} class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
           <img class="bi me-2" width="96" height="55" src={% static 'blog/img/logo_robotica.jpg' %}>
           <span class="fs-4">Blog Tecno</span>
         </a>
@@ -50,11 +50,11 @@
         <ul class="dropdown-menu text-small shadow">
 
           {% if request.user.is_staff %}
-            <li><a class="dropdown-item" href={% url 'crear_articulo' %}>Crear Artículo</a></li>
+            <li><a class="dropdown-item" href={% url 'apps.blog:crear_articulo' %}>Crear Artículo</a></li>
           {% endif %}
 
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href={% url 'inicio' %}>Salir</a></li>
+          <li><a class="dropdown-item" href={% url 'apps.blog:inicio' %}>Salir</a></li>
 
         </ul>
       </section>
@@ -84,7 +84,7 @@
               <h4 class="fst-italic">Categorías</h4>
               <ol class="list-unstyled mb-0">
                 {% for categoria in categorias %}
-                  <li><a class=text-decoration-none href= {% url 'categoria' categoria_slug=categoria.slug%} >{{ categoria }}</a></li>
+                  <li><a class=text-decoration-none href= {% url 'apps.blog:categoria' categoria_slug=categoria.slug%} >{{ categoria }}</a></li>
                 {% endfor %}
               </ol>
             </article>
@@ -93,7 +93,7 @@
               <h4 class="fst-italic">Archivos</h4>
               <ol class="list-unstyled mb-0">
                 {% for archivo in archivos %}
-                  <li><a class=text-decoration-none href= {% url 'archivo' year=archivo.fecha.year month=archivo.fecha.month %} >{{archivo.mes_letra}} de {{archivo.fecha.year}}</a></li>
+                  <li><a class=text-decoration-none href= {% url 'apps.blog:archivo' year=archivo.fecha.year month=archivo.fecha.month %} >{{archivo.mes_letra}} de {{archivo.fecha.year}}</a></li>
                 {% endfor %}
               </ol>
             </article>

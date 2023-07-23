@@ -103,4 +103,6 @@ class Articulo(models.Model):
         super(Articulo, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.titulo 
+        return self.titulo
+
+

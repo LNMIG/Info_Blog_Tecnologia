@@ -9,9 +9,9 @@
       <img src= {{ articulo.imagen.url }} class="img-fluid" alt="" />
     </section>
 
-    <strong class="d-inline-block mb-2 mt-3 text-primary"><a href= {% url 'categoria' categoria_slug=articulo.categoria.slug %} >{{ articulo.categoria }}</a></strong>
+    <strong class="d-inline-block mb-2 mt-3 text-primary"><a href= {% url 'apps.blog:categoria' categoria_slug=articulo.categoria.slug %} >{{ articulo.categoria }}</a></strong>
     <h2 class="blog-post-title mb-1">{{ articulo.titulo }}</h2>
-    <p class="blog-post-meta">{{ articulo.creacion|date:'d M Y' }} por <a href= {% url 'autor' autor=articulo.autor%} >{{ articulo.autor }}</a></p>
+    <p class="blog-post-meta">{{ articulo.creacion|date:'d M Y' }} por <a href= {% url 'apps.blog:autor' autor=articulo.autor%} >{{ articulo.autor }}</a></p>
 
     <p class="lead my-3">{{ articulo.bajada }}</p>
     <hr>
@@ -26,11 +26,11 @@
   </article>
 
   <section class="my-3 mt-5 mb-5">
-    <a class="btn btn-dark rounded-pill" href={% url 'inicio' %}>Volver al Inicio</a>
+    <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:inicio' %}>Volver al Inicio</a>
     {% if request.user == articulo.autor %}
       <section class='float-end'>
-        <a class="btn btn-dark rounded-pill" href={% url 'actualizar_articulo' articulo_slug=articulo.slug %}>Editar</a>
-        <a class="btn btn-dark rounded-pill" href={% url 'eliminar_articulo' articulo_slug=articulo.slug %}>Eliminar</a>
+        <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:actualizar_articulo' articulo_slug=articulo.slug %}>Editar</a>
+        <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:eliminar_articulo' articulo_slug=articulo.slug %}>Eliminar</a>
     </section>
     {% endif %} 
   </section>
