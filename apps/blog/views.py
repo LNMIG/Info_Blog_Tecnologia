@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, ListView, DetailView, YearArchiveView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
@@ -21,6 +21,27 @@ class ArticuloDetailView(DetailView):
     context_object_name = 'articulo'
     slug_field = 'slug'
     slug_url_kwarg = 'articulo_slug'
+
+    def get_context_data(self, **kwargs):
+        articulo_id = models.Articulo.objects.get(slug=self.kwargs['articulo_slug']).id
+        context = super(ArticuloDetailView, self).get_context_data(**kwargs)
+        context['form'] = forms.ComentarioForm
+        context['comentarios'] = models.Comentario.objects.filter(articulo_id=articulo_id)
+        context['es_comentarista'] = self.request.user
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        form = forms.ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.autor = request.user
+            comentario.articulo_id = models.Articulo.objects.get(slug=self.kwargs['articulo_slug']).id
+            comentario.save()
+            return redirect('apps.blog:articulo', articulo_slug=self.kwargs['articulo_slug'])
+        else:
+            context = self.get_context_data(**kwargs)
+            context['form'] = form
+            return self.render_to_response(context)
 
 
 class ArticulosByCategoriaView(ListView):
@@ -85,7 +106,7 @@ class ArticuloCreateView(CreateView):
         form.instance.autor = self.request.user
         return super().form_valid(form)
 
-    success_url = reverse_lazy('inicio')
+    success_url = reverse_lazy('apps.blog:inicio')
 
 
 class ArticuloUpdateView(UpdateView):
@@ -103,7 +124,7 @@ class ArticuloUpdateView(UpdateView):
         # Obtiene el artículo actualizado desde el contexto
         articulo = self.object
         # Genera la URL para la vista 'articulo' usando el slug actualizado del artículo
-        return reverse('articulo', kwargs={'articulo_slug': articulo.slug})
+        return reverse('apps.blog:articulo', kwargs={'articulo_slug': articulo.slug})
 
 
 class ArticuloDeleteView(DeleteView):
@@ -111,4 +132,23 @@ class ArticuloDeleteView(DeleteView):
     template_name = 'blog/forms/eliminar_articulo.html'
     slug_field = 'slug'
     slug_url_kwarg = 'articulo_slug'
-    success_url = reverse_lazy('inicio')
+    success_url = reverse_lazy('apps.blog:inicio')
+
+
+class ComentarioUpdateView(UpdateView):
+    model = models.Comentario
+    context_object_name = 'comentario'
+    template_name = 'blog/forms/actualizar_comentario.html'
+    form_class = forms.ComentarioForm
+
+    def form_valid(self, form):
+        form.instance.autor = self.request.user
+        return super().form_valid(form)
+
+    success_url = reverse_lazy('apps.blog:inicio')
+
+class ComentarioDeleteView(DeleteView):
+    model = models.Comentario
+    context_object_name = 'comentario'
+    template_name = 'blog/forms/eliminar_comentario.html'
+    success_url = reverse_lazy('apps.blog:inicio')

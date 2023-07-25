@@ -39,6 +39,14 @@ class EtiquetaAdmin(admin.ModelAdmin):
 admin.site.register(models.Etiqueta, EtiquetaAdmin)
 
 
+#COMENTARIO
+class ComentarioAdmin(admin.ModelAdmin):
+    readonly_fields = ('creacion', 'actualizacion')
+    list_display = ('autor', 'contenido', 'articulo', 'publicado')
+
+admin.site.register(models.Comentario, ComentarioAdmin)
+
+
 #ARTICULO
 class ArticuloAdmin(admin.ModelAdmin):
     readonly_fields = ('creacion', 'actualizacion')

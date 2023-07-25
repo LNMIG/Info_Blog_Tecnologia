@@ -25,4 +25,10 @@ urlpatterns = [
 
     path('eliminar_articulo/<slug:articulo_slug>',
          views.ArticuloDeleteView.as_view(), name='eliminar_articulo'),
+
+    path('actualizar_comentario/<int:pk>', 
+         views.ComentarioUpdateView.as_view(), name='actualizar_comentario'),
+
+    path('eliminar_comentario/<int:pk>', 
+         views.ComentarioDeleteView.as_view(), name='eliminar_comentario'),
 ]
