@@ -1,0 +1,35 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block contenido %}
+
+  <section>
+    <h1>Formulario de contacto</h1>
+    <br>
+
+    <form method='post'>
+      {% if messages %}
+
+        {% for message in messages %}
+          <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+
+        <section class='my-3 mt-5 mb-5'>
+          <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:inicio' %}>Volver a inicio</a>
+        </section>
+
+      {% else %}
+
+        {% csrf_token %}
+        {{ form }}
+        <section class='my-3 mt-5 mb-5'>
+          <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:inicio' %}>Cancelar</a>
+          <input class='btn btn-dark rounded-pill float-end' type='submit' value='Enviar'>
+        </section>
+
+      {% endif %}
+    </form>
+
+  </section>
+
+{% endblock contenido %}
