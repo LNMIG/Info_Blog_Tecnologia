@@ -1,0 +1,87 @@
+{% load static %}
+
+
+{% block comentarios %}
+
+  <section>
+    <strong>Deja tus comentarios aquí</strong>
+    <div class="card">
+
+      {% for comentario in comentarios %}
+        <div class="card-body alert alert-primary mb-0" role="alert">
+          <div class="d-flex flex-start align-items-center border-bottom border-dark">
+            <img class="rounded-circle shadow-1-strong me-3"
+              src={% if request.user.is_superuser %} "{% static 'blog/img/user_admin.webp'%}"
+                  {% elif request.user.is_staff %} "{% static 'blog/img/user_staff.webp'%}"
+                  {% else %} "{% static 'blog/img/user_user.png' %}"
+                  {% endif %}
+              alt="avatar"
+              width="60"
+              height="60"
+            />
+            <div>
+              <h6 class="fw-bold text-primary mb-1">{{ comentario.autor }}</h6>
+              <p class="text-muted small mb-0">
+                Comentado el - {{ comentario.creacion|date:'d M Y'  }} - {{ es_comentarista }}
+              </p>
+            </div>
+          </div>
+
+          <p class="mt-3 mb-3 pb-1">
+            {{ comentario.contenido }}
+          </p>
+          <section class="my-3 mt-3 mb-5">
+            {% if request.user == comentario.autor %}
+              <section class='float-end'>
+                <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:actualizar_comentario' pk=comentario.id %}>Editar Comentario</a>
+                <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:eliminar_comentario' pk=comentario.id %}>Eliminar comentario</a>
+              </section>
+            {% endif %} 
+          </section>
+
+        </div>
+
+      {% empty %}
+
+        {% if request.user.is_active%}
+          <div class="alert alert-danger mb-0" role="alert">
+            <p>Aún no hay comentarios. Se el primero en hacerlo</p>
+          </div>
+        {% else %}
+          <div class="alert alert-danger mb-0" role="alert">
+            <p>Aún no estás registrado y no puedes comentar. ¡Regístrate gratis y disfruta de más opciones del Blog!</p>
+          </div>
+        {% endif %}
+
+      {% endfor %}
+
+      {% if request.user.is_active and comentarios|length == 0 %}
+        <form method='post' class="mb-0">
+          <div class="card-footer">
+            <div class="d-flex flex-start w-100">
+              <img class="rounded-circle shadow-1-strong me-3"
+                src={% if request.user.is_superuser %} "{% static 'blog/img/user_admin.webp'%}"
+                    {% elif request.user.is_staff %} "{% static 'blog/img/user_staff.webp'%}"
+                    {% else %} "{% static 'blog/img/user_user.png' %}"
+                    {% endif %}
+                alt="avatar"
+                width="40"
+                height="40"
+              />
+              <div class="form-outline w-100">
+                {% csrf_token %}
+                {{ form.as_p }}
+              </div>
+            </div>
+            <div class="mt-3 pt-1 float-end">
+              <input class="btn btn-primary btn-sm" type='submit' value='Publicar comentario'>
+              <a class="btn btn-outline-primary btn-sm" href={% url 'apps.blog:articulo' articulo_slug=articulo.slug %}>Cancelar</a>
+            </div>
+          </div>
+        </form>
+      {% endif %}
+
+    </div>
+  </section>
+
+{% endblock comentarios %}

@@ -84,7 +84,7 @@
               <h4 class="fst-italic">Categorías</h4>
               <ol class="list-unstyled mb-0">
                 {% for categoria in categorias %}
-                  <li><a class=text-decoration-none href= {% url 'apps.blog:categoria' categoria_slug=categoria.slug%} >{{ categoria }}</a></li>
+                  <li><a class="text-decoration-none" href= {% url 'apps.blog:categoria' categoria_slug=categoria.slug%} >{{ categoria }}</a></li>
                 {% endfor %}
               </ol>
             </article>
@@ -93,7 +93,7 @@
               <h4 class="fst-italic">Archivos</h4>
               <ol class="list-unstyled mb-0">
                 {% for archivo in archivos %}
-                  <li><a class=text-decoration-none href= {% url 'apps.blog:archivo' year=archivo.fecha.year month=archivo.fecha.month %} >{{archivo.mes_letra}} de {{archivo.fecha.year}}</a></li>
+                  <li><a class="text-decoration-none" href= {% url 'apps.blog:archivo' year=archivo.fecha.year month=archivo.fecha.month %} >{{archivo.mes_letra}} de {{archivo.fecha.year}}</a></li>
                 {% endfor %}
               </ol>
             </article>
@@ -103,11 +103,21 @@
               <ol class="list-unstyled">
                 {% for red in redes %}
                  {% if red.url %}
-                    <li><a class=text-decoration-none href={{ red.url }} target="_blank"><i class="{{red.icono}}"></i>  {{red}}</a></li>
+                    <li><a class="text-decoration-none" href={{ red.url }} target="_blank"><i class="{{red.icono}}"></i>  {{red}}</a></li>
                   {% endif %}
                 {% endfor %}
               </ol>
             </article>
+
+
+            <article class="p-4 text-center">
+              <h4 class="fst-italic">Contacto</h4>
+              <a class="text-decoration-none" href= {% url 'apps.contacto:contacto' %}>
+                <i class="bi bi-envelope-at-fill"></i>
+                Envía tu consulta
+              </a>
+            </article>
+
 
           </section>
         </aside>
