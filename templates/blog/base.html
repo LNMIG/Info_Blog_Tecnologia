@@ -31,33 +31,55 @@
 
       <section class="dropdown">
         <a href={% url 'apps.blog:inicio' %} class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-          <img class="bi me-2" width="96" height="55" src={% static 'blog/img/logo_robotica.jpg' %}>
-          <span class="fs-4">Blog Tecno</span>
+          <img class="bi me-2" width="95" height="95" src={% static 'blog/img/robot_logo2.jpg' %}>
+          <section class="d-flex flex-column align-items-center justify-content-start" style="background-color: #ececec; font-weight:500;">
+            <span class="text-center" style="width:10rem; font-size:0.85rem; letter-spacing:0.55rem;">NOTICIAS</span>
+            <span class="fs-2 text-center border-top border-bottom border-primary border-1" style="width:8rem; font-weight:700;letter-spacing:0.15rem;">BLOG</span>
+            <span class="text-center" style="width:10rem; font-size:0.85rem; letter-spacing:0.35rem;">ROBOTICAS</span>
+          </section>
         </a>
       </section>
 
-      <section class="flex-shrink-0 dropdown">
-        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          {% if  request.user.is_superuser %}
-            <img src={% static 'blog/img/user_admin.webp' %} alt="mdo" width="55" height="55" class="rounded-circle">
-          {% elif request.user.is_staff %}
-            <img src={% static 'blog/img/user_staff.webp' %} alt="mdo" width="55" height="55" class="rounded-circle">
-          {% else %}
-            <img src={% static 'blog/img/user_user.png' %} alt="mdo" width="55" height="55" class="rounded-circle">
-          {% endif %}
-        </a>
-        <ul class="dropdown-menu text-small shadow">
+      {%if request.user.is_authenticated %}
 
-          {% if request.user.is_staff %}
-            <li><a class="dropdown-item" href={% url 'apps.blog:crear_articulo' %}>Crear Artículo</a></li>
-          {% endif %}
+        <section class="flex-shrink-0 dropdown">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            {% if  request.user.is_superuser %}
+              <img src={% static 'blog/img/user_admin.webp' %} alt="mdo" width="55" height="55" class="rounded-circle">
+            {% elif request.user.is_staff %}
+              <img src={% static 'blog/img/user_staff.webp' %} alt="mdo" width="55" height="55" class="rounded-circle">
+            {% else %}
+              <img src={% static 'blog/img/user_user.png' %} alt="mdo" width="55" height="55" class="rounded-circle">
+            {% endif %}
+          </a>
 
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href={% url 'apps.blog:inicio' %}>Salir</a></li>
+          <ul class="dropdown-menu text-small shadow">
 
-        </ul>
-      </section>
+            {% if request.user.is_staff %}
+              <li><a class="dropdown-item" href={% url 'apps.blog:crear_articulo' %}>Crear Artículo</a></li>
+            {% endif %}
+
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href={% url 'logout' %}>Salir</a></li>
+
+          </ul>
+        </section>
+
+      {% else %}
+
+        <section class="flex-shrink-0 dropdown">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <span>MENU</span>
+          </a>
+          <ul class="dropdown-menu text-small shadow">
+              <li><a class="dropdown-item" href={% url 'login' %}>Login</a></li>
+              <li><a class="dropdown-item" href={% url 'apps.blog:signup' %}>Registrarse</a></li>
+          </ul>
+        </section>
+
+      {% endif %}
     </header>
 
     <main class="mt-2">
@@ -93,7 +115,7 @@
               <h4 class="fst-italic">Archivos</h4>
               <ol class="list-unstyled mb-0">
                 {% for archivo in archivos %}
-                  <li><a class="text-decoration-none" href= {% url 'apps.blog:archivo' year=archivo.fecha.year month=archivo.fecha.month %} >{{archivo.mes_letra}} de {{archivo.fecha.year}}</a></li>
+                  <li><a class="text-decoration-none" href= {% url 'apps.blog:archivo' year=archivo.fecha.year month=archivo.fecha.month %} >{{ archivo.fecha|date:'F Y'|capfirst }}</a></li>
                 {% endfor %}
               </ol>
             </article>
@@ -126,7 +148,7 @@
     <script src={% static 'blog/js/bootstrap.bundle.min.js' %}></script>
 
     <footer class="blog-footer">
-      <p>Python Developers - Derechos reservados © 2023</p>
+      <p>BLOG Noticias Robóticas - Derechos reservados © 2023</p>
       <p><a href="#"><i class="bi bi-arrow-bar-up text-dark"></i></a></p>
     </footer>
   </section>

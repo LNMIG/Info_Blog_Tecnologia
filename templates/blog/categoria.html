@@ -25,7 +25,7 @@
                 <section class="card-body">
                   <strong class="d-inline-block mb-2 text-primary">{{ articulo.categoria }}</strong>
                   <h4 class="mb-0">{{ articulo.titulo }}</h4>
-                  <p class="mb-1 text-muted">{{ articulo.creacion|date:'d M Y' }}</p>
+                  <p class="mb-1 text-muted">{{ articulo.creacion|date:'d F Y'|capfirst }}</p>
                   <p class="card-text mb-auto">{{ articulo.bajada }}</p>
                   <p class="card-text">
                     <small class="text-muted">
@@ -44,7 +44,7 @@
                 <section class="card-body">
                   <strong class="d-inline-block mb-2 text-primary">{{ articulo.categoria }}</strong>
                   <h4 class="mb-0">{{ articulo.titulo }}</h4>
-                  <p class="mb-1 text-muted">{{ articulo.creacion|date:'d M Y' }}</p>
+                  <p class="mb-1 text-muted">{{ articulo.creacion|date:'d F Y'|capfirst }}</p>
                   <p class="card-text mb-auto">{{ articulo.bajada }}</p>
                   <p class="card-text">
                     <small class="text-muted">

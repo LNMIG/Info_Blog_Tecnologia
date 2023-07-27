@@ -11,8 +11,8 @@
         <div class="card-body alert alert-primary mb-0" role="alert">
           <div class="d-flex flex-start align-items-center border-bottom border-dark">
             <img class="rounded-circle shadow-1-strong me-3"
-              src={% if request.user.is_superuser %} "{% static 'blog/img/user_admin.webp'%}"
-                  {% elif request.user.is_staff %} "{% static 'blog/img/user_staff.webp'%}"
+              src={% if comentario.autor.is_superuser %} "{% static 'blog/img/user_admin.webp'%}"
+                  {% elif comentario.autor.is_staff %} "{% static 'blog/img/user_staff.webp'%}"
                   {% else %} "{% static 'blog/img/user_user.png' %}"
                   {% endif %}
               alt="avatar"
@@ -22,7 +22,8 @@
             <div>
               <h6 class="fw-bold text-primary mb-1">{{ comentario.autor }}</h6>
               <p class="text-muted small mb-0">
-                Comentado el - {{ comentario.creacion|date:'d M Y'  }} - {{ es_comentarista }}
+                {% comment %} Comentado el - {{ comentario.creacion|date:'d M Y'  }} - {{ es_comentarista }} {% endcomment %}
+                Comentado el - {{ comentario.creacion|date:'d M Y'  }}
               </p>
             </div>
           </div>
@@ -43,7 +44,7 @@
 
       {% empty %}
 
-        {% if request.user.is_active%}
+        {% if request.user.is_active or request.user.is_authenticated %}
           <div class="alert alert-danger mb-0" role="alert">
             <p>Aún no hay comentarios. Se el primero en hacerlo</p>
           </div>
@@ -55,7 +56,8 @@
 
       {% endfor %}
 
-      {% if request.user.is_active and comentarios|length == 0 %}
+      {% comment %} {% if request.user.is_active or request.user.is_authenticated and comentarios|length == 0 %} {% endcomment %}
+      {% if request.user.is_active or request.user.is_authenticated %}
         <form method='post' class="mb-0">
           <div class="card-footer">
             <div class="d-flex flex-start w-100">
