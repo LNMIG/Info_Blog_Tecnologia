@@ -15,7 +15,7 @@ urlpatterns = [
     path('autor/<str:autor>/', views.ArticulosByAutorView.as_view(), name='autor'),
 
     path('archivo/<int:year>/<int:month>', 
-        views.ArticulosByArchivoViews.as_view(), name='archivo'),
+        views.ArticulosByArchivoView.as_view(), name='archivo'),
 
     path('crear_articulo/', views.ArticuloCreateView.as_view(),
          name='crear_articulo'),
@@ -31,4 +31,8 @@ urlpatterns = [
 
     path('eliminar_comentario/<int:pk>', 
          views.ComentarioDeleteView.as_view(), name='eliminar_comentario'),
+
+    path('signup/', views.SignUpView.as_view(), name='signup'),
+
+    path('confirmacion/<str:code>/<str:user>/', views.ConfirmationView.as_view(), name='confirmacion')
 ]

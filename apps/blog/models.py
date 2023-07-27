@@ -8,8 +8,7 @@ from django.conf import settings
 #Modelo Acerca de
 
 class Acerca(models.Model):
-    descripcion = models.CharField(max_length=450,
-    verbose_name= 'Descripción')
+    descripcion = models.CharField(max_length=450, verbose_name= 'Descripción')
     creacion = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     actualizacion = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
 
@@ -112,7 +111,7 @@ class Articulo(models.Model):
 
 class Comentario(models.Model):
     contenido = models.TextField(verbose_name='Comentario')
-    autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='get_comentarios')
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='get_comentarios')
     articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE, related_name='get_comentarios')
     publicado = models.BooleanField(default=True, verbose_name='Publicado')
     creacion = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
