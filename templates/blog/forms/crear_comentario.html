@@ -32,7 +32,7 @@
             {{ comentario.contenido }}
           </p>
           <section class="my-3 mt-3 mb-5">
-            {% if request.user == comentario.autor %}
+            {% if request.user == comentario.autor or request.user.is_superuser %}
               <section class='float-end'>
                 <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:actualizar_comentario' pk=comentario.id %}>Editar Comentario</a>
                 <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:eliminar_comentario' pk=comentario.id %}>Eliminar comentario</a>

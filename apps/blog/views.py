@@ -124,10 +124,13 @@ class ArticulosByArchivoView(YearArchiveView):
 ################# CRUD ####################
 
 def usuario_es_colaborador(user):
-    return user.groups.filter(name='colaborador').exists()
+    if user.groups.filter(name='colaborador').exists() or user.is_superuser:
+        return True
+    else:
+        return False
 
 
-@method_decorator(user_passes_test(usuario_es_colaborador, login_url='inicio'), name='dispatch')
+@method_decorator(user_passes_test(usuario_es_colaborador, login_url='apps.blog:inicio'), name='dispatch')
 class ArticuloCreateView(CreateView):
     model = models.Articulo
     template_name = 'blog/forms/crear_articulo.html'
