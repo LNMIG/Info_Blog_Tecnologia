@@ -12,7 +12,6 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404, redirect
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView

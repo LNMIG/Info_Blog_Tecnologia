@@ -6,7 +6,7 @@
 
   {% if articulos %}
     <section class="alert alert-success" role="alert">
-      <strong>Te mostramos los Posts publicados el: {{ articulo_fecha.creacion|date:'F Y'|capfirst }}</strong>
+      <strong>Te mostramos los Posts publicados el: {{ articulo_fecha.creacion|date:'d M Y'|capfirst }}</strong>
     </section>
   {% else %}
     <section class="alert alert-danger" role="alert">
