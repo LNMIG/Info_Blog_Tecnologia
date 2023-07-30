@@ -42,9 +42,9 @@ class InicioView(ListView):
 
         # check selection in order to add to the exiting context extra_context
         if order_selected == 'descendente':
-            context['archivos'] = [{'fecha':fecha} for fecha in models.Articulo.objects.dates('creacion', 'day', order='DESC').filter(publicado=True)]
+            context['archivos'] = [{'fecha':fecha} for fecha in models.Articulo.objects.dates('creacion', 'month', order='DESC').filter(publicado=True)]
         else:
-            context['archivos']= [{'fecha':fecha} for fecha in models.Articulo.objects.dates('creacion', 'day', order='ASC').filter(publicado=True)]
+            context['archivos']= [{'fecha':fecha} for fecha in models.Articulo.objects.dates('creacion', 'month', order='ASC').filter(publicado=True)]
         
         return self.render_to_response(context)
 

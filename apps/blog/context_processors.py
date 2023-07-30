@@ -15,7 +15,7 @@ def contexto_base(request):
     contexto['categorias'] = models.Categoria.objects.filter(activo=True)
 
     #Archivos
-    contexto['archivos'] = [{'fecha':fecha} for fecha in models.Articulo.objects.dates('creacion', 'day', order='DESC').filter(publicado=True)]
+    contexto['archivos'] = [{'fecha':fecha} for fecha in models.Articulo.objects.dates('creacion', 'month', order='DESC').filter(publicado=True)]
 
     #Redes
     contexto['redes'] = models.Red.objects.all()
