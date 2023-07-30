@@ -2,7 +2,8 @@
 
 {% block contenido %}
 
-    <h1>Registro de Usuario</h1>
+    <h2 class="bg-light rounded ps-2">Registro de usuario</h2>
+    <br>
 
     {% if form.errors %}
         <ul>
@@ -26,6 +27,11 @@
             {% endif %}
         </div>
         {% endfor %}
+        <br>
+        <div class="alert alert-primary mb-0" role="alert">
+          <i class="bi bi-info-circle-fill"></i>
+          Te llegará un mensaje de confirmación al email que proporcionaste. Deberás seguir ese link para confirmar tu cuenta y poder loguearte.
+        </div>
         <div class="forms-group__button-div">
             <input class="btn btn-dark rounded-pill my-5 forms-group__button" type="submit" value='Registrarse'>
         </div>

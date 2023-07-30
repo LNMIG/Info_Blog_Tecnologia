@@ -27,7 +27,7 @@
 
   <section class="my-3 mt-5 mb-5">
     <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:inicio' %}>Volver al Inicio</a>
-    {% if request.user == articulo.autor or request.user.is_superuser %}
+    {% if request.user == articulo.autor or request.user.is_superuser or request.user.is_staff %}
       <section class='float-end'>
         <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:actualizar_articulo' articulo_slug=articulo.slug %}>Editar</a>
         <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:eliminar_articulo' articulo_slug=articulo.slug %}>Eliminar</a>

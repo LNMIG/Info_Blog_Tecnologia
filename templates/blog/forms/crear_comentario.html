@@ -4,7 +4,7 @@
 {% block comentarios %}
 
   <section>
-    <strong>Deja tus comentarios aquí</strong>
+    <div class="align-items-start alert alert-success mb-1"><strong>¡Deja tus comentarios aquí!</strong></div>
     <div class="card">
 
       {% for comentario in comentarios %}
@@ -32,9 +32,13 @@
             {{ comentario.contenido }}
           </p>
           <section class="my-3 mt-3 mb-5">
-            {% if request.user == comentario.autor or request.user.is_superuser %}
+            {% if request.user == comentario.autor %}
               <section class='float-end'>
                 <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:actualizar_comentario' pk=comentario.id %}>Editar Comentario</a>
+                <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:eliminar_comentario' pk=comentario.id %}>Eliminar comentario</a>
+              </section>
+            {% elif request.user.is_superuser or request.user.is_staff %}
+              <section class='float-end'>
                 <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:eliminar_comentario' pk=comentario.id %}>Eliminar comentario</a>
               </section>
             {% endif %} 
@@ -45,7 +49,7 @@
       {% empty %}
 
         {% if request.user.is_active or request.user.is_authenticated %}
-          <div class="alert alert-danger mb-0" role="alert">
+          <div class="alert alert-danger mb-1" role="alert">
             <p>Aún no hay comentarios. Se el primero en hacerlo</p>
           </div>
         {% else %}

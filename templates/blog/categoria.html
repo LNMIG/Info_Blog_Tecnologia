@@ -5,11 +5,11 @@
 
   {% if articulos %}
     <section class="alert alert-success" role="alert">
-      <strong>Todos los Posts con la categoría: {{ categoria }}</strong>
+      <strong>Te mostramos los Posts con la categoría: {{ categoria }}</strong>
     </section>
   {% else %}
     <section class="alert alert-danger" role="alert">
-      <strong>No existen artículos con la categoría: {{ categoria }}</strong>
+      <strong>No existen Posts con la categoría: {{ categoria }}</strong>
     </section>
   {% endif %}
 
@@ -67,27 +67,33 @@
   {% if articulos %}
     <nav aria-label="...">
       <ul class="pagination justify-content-center">
-        <li class="page-item"><a class="page-link" href="?page=1">Inicio</a></li>
+        {% comment %} <li class="page-item"><a class="page-link" href="?page=1">Inicio</a></li> {% endcomment %}
+        <li class="page-item"><a class="page-link" href="?page=1"><i class="bi bi-chevron-bar-left"></i></a></li>
 
         {% if page_obj.has_previous %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% comment %} <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a> {% endcomment %}
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-double-left"></i></a>
           </li>
         {% else %}
-          <li class="page-item page-link disabled">Anterior</li>
+          {% comment %} <li class="page-item page-link disabled">Anterior</li> {% endcomment %}
+          <li class="page-item disabled"><a class="page-link" href="?page=1"><i class="bi bi-chevron-double-left"></i></a></li>
         {% endif %}
 
-        <li class="page-item page-link active">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</li>
+        <li class="page-item disabled"><a class="page-link py-1 text-light bg-info" href="#">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a></li>
         
         {% if page_obj.has_next %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+            {% comment %} <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a> {% endcomment %}
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-double-right"></i></a>
           </li>
         {% else %}
-          <li class="page-item disabled page-link">Siguiente</li>
+          {% comment %} <li class="page-item disabled page-link">Siguiente</li> {% endcomment %}
+          <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-double-right"></i></a></li>
         {% endif %}
         
-        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+        {% comment %} <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li> {% endcomment %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"><i class="bi bi-chevron-bar-right"></i></a></li>
 
       </ul>
     </nav>

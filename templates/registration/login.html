@@ -2,6 +2,8 @@
 
 {% block contenido %}
 
+  <h2 class="bg-light rounded ps-2">Bienvenido. Loguéate con tus datos</h2>
+
   {% if form.errors %}
     <p>Su nombre de usuario y contraseña no coinciden. Inténtelo de nuevo.</p>
   {% endif %}
@@ -18,7 +20,7 @@
 
     {% if messages %}
       {% for message in messages %}
-        <div class="message {{ message.tags }}">{{ message }}</div>
+        <div class="message {{ message.tags }} alert alert-success" role="alert">{{ message }}</div>
       {% endfor %}
     {% endif %}
 
