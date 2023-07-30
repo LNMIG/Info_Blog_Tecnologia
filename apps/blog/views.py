@@ -1,3 +1,4 @@
+from typing import Any
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
@@ -5,11 +6,13 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test
 from django.core.mail import send_mail
+from django.db.models.query import QuerySet
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404, redirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
@@ -27,6 +30,25 @@ class InicioView(ListView):
     context_object_name = 'articulos'
     paginate_by = 3
     queryset = models.Articulo.objects.filter(publicado=True)
+
+    def post(self, request, *args, **kwargs):
+        # get the user selection
+        order_selected = request.POST['ORDER']
+        
+        # create an object_list for InicioView
+        self.object_list = models.Articulo.objects.filter(publicado=True)
+        
+        # get the context
+        context = super().get_context_data(**kwargs)
+
+        # check selection in order to add to the exiting context extra_context
+        if order_selected == 'descendente':
+            context['archivos'] = [{'fecha':fecha} for fecha in models.Articulo.objects.dates('creacion', 'day', order='DESC').filter(publicado=True)]
+        else:
+            context['archivos']= [{'fecha':fecha} for fecha in models.Articulo.objects.dates('creacion', 'day', order='ASC').filter(publicado=True)]
+        
+        return self.render_to_response(context)
+
 
 class ArticuloDetailView(DetailView):
     model = models.Articulo

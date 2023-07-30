@@ -16,23 +16,22 @@
   <meta name="description" content="">
 
   <!-- Custom CSS -->
+  <link href={% static 'blog/css/blog.css' %} rel="stylesheet">
   <link href={% static 'blog/css/bootstrap.min.css' %} rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href={% static 'blog/css/blog.css' %} rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" >
-
 </head>
 
 <body>
-  <section class="container">
+  <section class="container px-0">
 
-    <header class="d-flex flex-wrap justify-content-between py-3 mb-4 border-bottom">
+    <header class="d-flex flex-wrap justify-content-center justify-content-sm-between py-3 mb-4 backgr-degradado border-bottom">
 
       <section class="dropdown">
         <a href={% url 'apps.blog:inicio' %} class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-          <img class="bi me-2" width="95" height="95" src={% static 'blog/img/robot_logo2.jpg' %}>
-          <section class="d-flex flex-column align-items-center justify-content-start" style="background-color: #ececec; font-weight:500;">
+          <img class="bi me-0 border border-3 border-start-0 border-end-0" width="95" height="95" src={% static 'blog/img/robot_logo2.jpg' %}>
+          <section class="d-flex flex-column align-items-center justify-content-start border border-3 border-start-0 rounded-end" style="background-color: #ffffff; font-weight:500;">
             <span class="text-center" style="width:10rem; font-size:0.85rem; letter-spacing:0.55rem;">NOTICIAS</span>
             <span class="fs-2 text-center border-top border-bottom border-primary border-1" style="width:8rem; font-weight:700;letter-spacing:0.15rem;">BLOG</span>
             <span class="text-center" style="width:10rem; font-size:0.85rem; letter-spacing:0.35rem;">ROBOTICAS</span>
@@ -42,15 +41,22 @@
 
       {%if request.user.is_authenticated %}
 
-        <section class="flex-shrink-0 dropdown">
+        <section class="d-flex flex-row flex-shrink-0 dropdown">
+
+          <section
+              class="text-bg-dark pt-3 ps-3 pe-4 border border-2 border-start-0 border-end-0 rounded"
+              style="font-weight:700; height:3.4375rem; clip-path: polygon(100% 0%, 90% 50%, 100% 100%, 15% 100%, 0% 50%, 15% 0%);">
+            <span>{{ request.user.username | title }}</span>
+          </section>
+
           <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
             aria-expanded="false">
             {% if  request.user.is_superuser %}
-              <img src={% static 'blog/img/user_admin.webp' %} alt="mdo" width="55" height="55" class="rounded-circle">
+              <img src={% static 'blog/img/user_admin.webp' %} alt="mdo" width="55" height="55" class="rounded-circle border border-2">
             {% elif request.user.is_staff %}
-              <img src={% static 'blog/img/user_staff.webp' %} alt="mdo" width="55" height="55" class="rounded-circle">
+              <img src={% static 'blog/img/user_staff.webp' %} alt="mdo" width="55" height="55" class="rounded-circle border border-2">
             {% else %}
-              <img src={% static 'blog/img/user_user.png' %} alt="mdo" width="55" height="55" class="rounded-circle">
+              <img src={% static 'blog/img/user_user.png' %} alt="mdo" width="55" height="55" class="rounded-circle border border-2">
             {% endif %}
           </a>
 
@@ -71,7 +77,7 @@
         <section class="flex-shrink-0 dropdown">
           <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
             aria-expanded="false">
-            <span>MENU</span>
+            <span><i class="bi bi-menu-button-wide-fill fs-1"></i></span>
           </a>
           <ul class="dropdown-menu text-small shadow">
               <li><a class="dropdown-item" href={% url 'login' %}>Login</a></li>
@@ -98,8 +104,8 @@
           <section class="position-sticky" style="top: 2rem;">
 
             <article class="p-4 mb-3 bg-light rounded">
-              <h4 class="fst-italic text-center">Acerca de</h4>
-              <p class="mb-0 text-justify">{{ acerca }}</p>
+              <h4 class="fst-italic text-center">Acerca de nosotros</h4>
+              <p class="mb-0 text-center">{{ acerca }}</p>
             </article>
 
             <article class="p-4 text-center">
@@ -111,13 +117,30 @@
               </ol>
             </article>
 
-            <article class="p-4 text-center">
-              <h4 class="fst-italic">Archivos</h4>
-              <ol class="list-unstyled mb-0">
-                {% for archivo in archivos %}
-                  <li><a class="text-decoration-none" href= {% url 'apps.blog:archivo' year=archivo.fecha.year month=archivo.fecha.month %} >{{ archivo.fecha|date:'F Y'|capfirst }}</a></li>
-                {% endfor %}
-              </ol>
+            <article class="p-0 py-4 text-center">
+              <form 
+                action="{% url 'apps.blog:inicio' %}"
+                method="post"
+              >
+                {% csrf_token %}
+
+                <div class="d-flex justify-content-center align-items-center gap-3">
+                  <h4 class="fst-italic">Archivos</h4>
+                  
+                  <div class="dropdown pb-2">
+                    <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li class="d-flex align-items-center"><input type="submit" name="ORDER" value='descendente' class="dropdown-item w-100"><i class="bi bi-sort-alpha-down-alt fs-4"></i></li>
+                        <li class="d-flex align-items-center"><input type="submit" name="ORDER" value='ascendente' class="dropdown-item w-100"><i class="bi bi-sort-alpha-up-alt fs-4"></i></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <ol class="list-unstyled mb-0">
+                  {% for archivo in archivos %}
+                    <li><a class="text-decoration-none" href= {% url 'apps.blog:archivo' year=archivo.fecha.year month=archivo.fecha.month %} >{{ archivo.fecha|date:'d F Y'|capfirst }}</a></li>
+                  {% endfor %}
+                </ol>
             </article>
 
             <article class="p-4 text-center">
@@ -131,7 +154,6 @@
               </ol>
             </article>
 
-
             <article class="p-4 text-center">
               <h4 class="fst-italic">Contacto</h4>
               <a class="text-decoration-none" href= {% url 'apps.contacto:contacto' %}>
@@ -140,16 +162,15 @@
               </a>
             </article>
 
-
           </section>
         </aside>
       </section>
     </main>
     <script src={% static 'blog/js/bootstrap.bundle.min.js' %}></script>
 
-    <footer class="blog-footer">
+    <footer class="blog-footer text-white">
       <p>BLOG Noticias Robóticas - Derechos reservados © 2023</p>
-      <p><a href="#"><i class="bi bi-arrow-bar-up text-dark"></i></a></p>
+      <p><a href="#"><i class="bi bi-arrow-bar-up text-light"></i></a></p>
     </footer>
   </section>
 </body>
