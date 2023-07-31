@@ -41,7 +41,7 @@ class Red(models.Model):
 #MODELO CATEGORIA
 class Categoria(models.Model):
     nombre = models.CharField(max_length=200, unique=True, verbose_name='Nombre')
-    slug = models.SlugField()
+    slug = models.SlugField(max_length=200)
     activo = models.BooleanField(default=True, verbose_name='Activo')
     creacion = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     actualizacion = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
@@ -57,7 +57,7 @@ class Categoria(models.Model):
 
     def __str__(self):
         return self.nombre 
-        
+
 
 #MODELO ETIQUETA
 class Etiqueta(models.Model):
