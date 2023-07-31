@@ -3,9 +3,12 @@
 {% block contenido %}
 
     <section class="mt-5 mb-5 text-center">
-        <h4 class='mb-5'>¡Te desconectaste!</h4>
+      <section class="d-flex flex-column justify-content-cener align-item-center">
+        <h4 class='mb-5'>¡Ya estás desconectado!</h4>
+        <h6 class='mb-5'>Sentimos que te vayas y esperamos volver a verte pronto</h6>
+      </section>
 
-        <a class="btn btn-dark rounded-pill" href="{% url 'login'%}">Haga clic aquí para iniciar sesión de nuevo.</a>
+      <a class="btn btn-dark rounded-pill" href="{% url 'login'%}">Haga clic aquí para iniciar sesión de nuevo.</a>
     </section>
 
 {% endblock %}

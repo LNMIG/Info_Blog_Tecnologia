@@ -203,6 +203,67 @@ class ArticuloDeleteView(DeleteView):
             # Si el usuario no es el autor, redirigir a la página de inicio
             return redirect('login')
 
+@method_decorator(user_passes_test(usuario_es_colaborador, login_url='apps.blog:inicio'), name='dispatch')
+class ArticuloListView(ListView):
+    model = models.Articulo
+    template_name = 'blog/articulo_listado.html'
+    context_object_name = 'articulos'
+
+@method_decorator(user_passes_test(usuario_es_colaborador, login_url='apps.blog:inicio'), name='dispatch')
+class ArticulosOrdenadosView(ListView):
+    model = models.Articulo
+    template_name = 'blog/articulo_listado.html'
+    context_object_name = 'articulos'
+    success_url = reverse_lazy('apps.blog:listar_articulos')
+
+    def get_queryset(self):
+        order_by = self.kwargs['order_by']
+        order_type = self.kwargs['order_type']
+
+        if order_by and order_type:
+            if order_by == 'fecha' and order_type=='DESC':
+                context = models.Articulo.objects.filter(publicado=True).order_by('-creacion')
+            elif order_by == 'fecha' and order_type=='ASC':
+                context = models.Articulo.objects.filter(publicado=True).order_by('creacion')
+            elif order_by == 'alfabeto' and order_type=='DESC':
+                context = models.Articulo.objects.filter(publicado=True).order_by('-titulo')
+            else:
+                context = models.Articulo.objects.filter(publicado=True).order_by('titulo')
+        else:
+            context = super().get_queryset()
+        return context
+
+@method_decorator(user_passes_test(usuario_es_colaborador, login_url='apps.blog:inicio'), name='dispatch')
+class CategoriaCreateView(CreateView):
+    model = models.Categoria
+    template_name = 'blog/forms/crear_categoria.html'
+    form_class = forms.CrearCategoriaForm
+    success_url = reverse_lazy('apps.blog:inicio')
+
+@method_decorator(user_passes_test(usuario_es_colaborador, login_url='apps.blog:inicio'), name='dispatch')
+class CategoriaListView(ListView):
+    model = models.Categoria
+    template_name = 'blog/categoria_listado.html'
+    context_object_name = 'categorias'
+
+@method_decorator(user_passes_test(usuario_es_colaborador, login_url='apps.blog:inicio'), name='dispatch')
+class CategoriaDeleteView(DeleteView):
+    model = models.Categoria
+    template_name = 'blog/forms/eliminar_categoria.html'
+    success_url = reverse_lazy('apps.blog:listar_categorias')
+
+@method_decorator(user_passes_test(usuario_es_colaborador, login_url='apps.blog:inicio'), name='dispatch')
+class CategoriaUpdateView(UpdateView):
+    model = models.Categoria
+    context_object_name = 'categoria'
+    template_name = 'blog/forms/actualizar_categoria.html'
+    form_class = forms.CrearCategoriaForm
+    success_url = reverse_lazy('apps.blog:listar_categorias')
+
+    def form_valid(self, form):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return super().form_valid(form)
+
 
 class ComentarioUpdateView(UpdateView):
     model = models.Comentario

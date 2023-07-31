@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+
+{% block contenido %}
+
+    <section>
+        <h2 class="bg-warning rounded ps-2">Eliminar Categoría</h2>
+        <br>
+        <form method='post'>
+            {% csrf_token %}
+
+            <article class="card mx-auto mt-5">
+                <section class="card-body">
+                    <h5 class="card-title text-center alert alert-warning " role="alert">Proceso de borrado</h5>
+                    <p class="card-text">¿Confirma que quiere borrar la categoría <strong>{{ object.nombre }}</strong> ?</p>
+
+                    <section class="card-body d-flex flex-row justify-content-end gap-2">
+                      <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:listar_categorias' %}>Cancelar</a>
+                      <input class='btn btn-dark rounded-pill float-end' type='submit' value='Confirmar'>
+                    </section>
+                </section>
+            </article>
+
+        </form>
+    </section>
+
+
+{% endblock contenido %}

@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+
+{% block contenido %}
+
+    <section>
+        <h2 class="bg-light rounded ps-2">Crear una nueva Categoría</h2>
+        <br>
+        <form method='post' enctype='multipart/form-data'>
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <section class='my-3 mt-5 mb-5'>
+                <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:inicio' %}>Cancelar</a>
+                <input class='btn btn-dark rounded-pill float-end' type='submit' value='Crear Categoría'>
+            </section>
+
+        </form>
+    </section>
+
+
+{% endblock contenido %}

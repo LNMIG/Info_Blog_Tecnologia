@@ -64,6 +64,8 @@
 
             {% if request.user.is_staff %}
               <li><a class="dropdown-item" href={% url 'apps.blog:crear_articulo' %}>Crear Artículo</a></li>
+              <li><a class="dropdown-item" href={% url 'apps.blog:listar_categorias' %}>Gestionar Categorías</a></li>
+              <li><a class="dropdown-item" href={% url 'apps.blog:listar_articulos' %}>Gestionar Posts</a></li>
             {% endif %}
 
             <li><hr class="dropdown-divider"></li>

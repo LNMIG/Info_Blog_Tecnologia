@@ -1,0 +1,41 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+
+{% block contenido %}
+
+  <section>
+    <h2 class="bg-light rounded ps-2">Estos son los posteos registrados</h2>
+    <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+      <a class="btn btn-outline-dark" href={% url 'apps.blog:ordenar_articulos' order_by='fecha' order_type='ASC' %}>Enero-Diciembre</a>
+      <a class="btn btn-outline-dark" href={% url 'apps.blog:ordenar_articulos' order_by='fecha' order_type='DESC' %}>Diciembre-Enero</a>
+      <a class="btn btn-outline-dark" href={% url 'apps.blog:ordenar_articulos' order_by='alfabeto' order_type='ASC' %}>A - Z</a>
+      <a class="btn btn-outline-dark" href={% url 'apps.blog:ordenar_articulos' order_by='alfabeto' order_type='DESC' %}>Z - A</a>
+    </div>
+    <br>
+    <br>
+
+    <ol class="list-unstyled mb-0">
+      {% for articulo in articulos %}
+          <li 
+            class="w-100 py-1 d-flex justify-content-between align-items-center border-bottom border-danger"
+            style="--bs-border-opacity: .5;"
+          >
+            <div class="d-flex justify-content-end align-items-center gap-3">
+              <a class="text-decoration-none" href= {% url 'apps.blog:articulo' articulo_slug=articulo.slug %}><strong>{{ articulo.titulo | truncatechars:25 }}</strong></a>
+              <i>({{ articulo.autor }})</i>
+            </div>
+            <div class="d-flex justify-content-end align-items-center">
+              <i class="pe-4" style="font-size: 0.75rem;">{{ articulo.creacion | date:'d F Y' | capfirst}}</i>
+              <a class="text-decoration-none pe-4" href={% url 'apps.blog:actualizar_articulo' articulo_slug=articulo.slug %}><i class="bi bi-pencil-fill text-success"></i></a>
+              <a class="text-decoration-none" href={% url 'apps.blog:eliminar_articulo' articulo_slug=articulo.slug %}><i class="bi bi-trash3 text-danger"></i></a>
+            </div>
+          </li>
+      {% empty %}
+          <li>No se encontraron posteos registrados</li>
+      {% endfor %}
+    </ol>
+
+  </section>
+
+{% endblock %}

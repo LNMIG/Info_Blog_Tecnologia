@@ -32,6 +32,17 @@ class ComentarioForm(forms.ModelForm):
         }
 
 
+class CrearCategoriaForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Categoria
+        fields = ['nombre']
+
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
 class RegisterUserForm(UserCreationForm):
     class Meta:
         model = User

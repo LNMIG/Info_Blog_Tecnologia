@@ -1,0 +1,36 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+
+{% block contenido %}
+
+  <section>
+    <h2 class="bg-light rounded ps-2">Estas son las categorías registradas</h2>
+    <br>
+    <ol class="list-unstyled mb-0">
+      {% for categoria in categorias %}
+          <li 
+            class="w-100 py-1 d-flex justify-content-between align-items-center border-bottom border-danger"
+            style="--bs-border-opacity: .5;"
+          >
+            {{ categoria.nombre }}
+            <div class="d-flex justify-content-end align-items-center">
+              <a class="text-decoration-none pe-4" href= {% url 'apps.blog:actualizar_categoria' pk=categoria.pk %}><i class="bi bi-pencil-fill text-success"></i></a>
+              <a class="text-decoration-none" href= {% url 'apps.blog:eliminar_categoria' pk=categoria.pk %}><i class="bi bi-trash3 text-danger"></i></a>
+            </div>
+          </li>
+      {% empty %}
+          <li>No se encontraron categorías registradas</li>
+      {% endfor %}
+    </ol>
+
+    <section class="w-100 my-3 mt-5 mb-5 d-flex justify-content-center">
+      <a class="w-100 btn btn-success rounded-pill" href={% url 'apps.blog:crear_categoria' %}>crear nueva categoría</a>
+    </section>
+
+    <section class="my-3 mt-5 mb-5">
+      <a class="btn btn-dark rounded-pill" href={% url 'apps.blog:inicio' %}>Volver al Inicio</a>
+    </section>
+  </section>
+
+{% endblock %}
