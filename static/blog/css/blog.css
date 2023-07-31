@@ -75,7 +75,6 @@ h6 {
   color: #727272;
   text-align: center;
   /* background-color: #f9f9f9; */
-  background: rgb(2,0,36);
   background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,0.8996848739495799) 35%, rgba(0,212,255,1) 100%);
   border-top: .05rem solid #e5e5e5;
 }
@@ -145,5 +144,9 @@ h6 {
 
 .backgr-degradado {
   background: rgb(2,0,36);
+  background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,0.8996848739495799) 35%, rgba(0,212,255,1) 100%);
+}
+
+.bg-primary {
   background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,0.8996848739495799) 35%, rgba(0,212,255,1) 100%);
 }
